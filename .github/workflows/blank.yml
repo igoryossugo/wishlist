@@ -2,6 +2,9 @@
 
 name: CI
 
+env:
+  COVERALLS_REPO_TOKEN: W70qrgBwp51sw4Wu3ZJF6qI8b6U52tT3W
+
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
 on:
@@ -25,6 +28,9 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.8
+
+    - name: Setup
+      run: make requirements-test
 
     - name: Static check
       run: make lint

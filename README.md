@@ -1,2 +1,2 @@
-# wishlist
+# Genie
 A wishlist API

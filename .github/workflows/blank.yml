@@ -36,7 +36,7 @@ jobs:
       run: make lint
 
     - name: Unit test
-      run: pytest genie
+      run: make test
 
     - name: Coverage
       run: coveralls

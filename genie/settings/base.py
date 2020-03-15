@@ -1,17 +1,28 @@
 import sys
 
-DEBUG = False
+from genie.settings import constants
 
-SECOND = 1
-MINUTE = 60 * SECOND
-HOUR = 60 * MINUTE
-DAY = 24 * HOUR
+DEBUG = False
 
 # SIMPLE SETTINGS STUFF
 SIMPLE_SETTINGS = {
     'OVERRIDE_BY_ENV': True,
     'CONFIGURE_LOGGING': True
 }
+
+POOL_OF_RAMOS = {
+    'authentication': [
+        constants.STATIC_AUTHORIZATION_BACKEND,
+    ]
+}
+
+# Auth applications
+AUTH_APPLICATIONS = {
+    'dev': 'jovem'
+}
+
+# DEFAULT BACKENDS
+DEFAULT_AUTHORIZATION_BACKEND = 'static'
 
 LOGGING = {
     'version': 1,

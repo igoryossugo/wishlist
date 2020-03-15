@@ -1,3 +1,4 @@
 aiohttp==3.6.2
 gunicorn==20.0.4
+ramos==1.4.0
 simple-settings==0.18.0

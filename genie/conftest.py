@@ -2,6 +2,26 @@ import pytest
 from aiohttp.client_reqrep import ClientRequest
 from yarl import URL
 
+from genie.backends.auth.models import Application
+from genie.factory import build_app
+
+
+@pytest.fixture
+def application():
+    return Application(name='dev', active=True)
+
+
+@pytest.fixture
+def token():
+    return 'jovem'
+
+
+@pytest.fixture
+async def client(aiohttp_client, token):
+    app = build_app()
+
+    return await aiohttp_client(app, headers={'Authorization': token})
+
 
 @pytest.fixture
 async def make_request(loop):

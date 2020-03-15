@@ -1,1 +1,3 @@
-from genie.contrib.auth.backends.static import StaticAuthenticationBackend  # noqa
+from genie.contrib.auth.backends.static import (  # noqa
+    StaticAuthenticationBackend
+)

@@ -2,7 +2,6 @@ import sys
 
 from genie.settings import constants
 
-
 DEBUG = False
 
 # SIMPLE SETTINGS STUFF

@@ -11,6 +11,5 @@ DAYS = 24 * HOURS
 ############
 # AUTHORIZATION
 STATIC_AUTHORIZATION_BACKEND = (
-    'setubal.contrib.auth.backends.static.StaticAuthenticationBackend'
+    'genie.contrib.auth.backends.static.StaticAuthenticationBackend'
 )
-

@@ -13,3 +13,7 @@ DAYS = 24 * HOURS
 STATIC_AUTHORIZATION_BACKEND = (
     'genie.contrib.auth.backends.static.StaticAuthenticationBackend'
 )
+
+SQLITE_DATABASE_BACKEND = (
+    'genie.models.database.sqlite.backend.SqliteDatabaseBackend'
+)

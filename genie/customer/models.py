@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from genie.models import BaseModel
+from genie.backends.database.models import BaseModel
 
 
 @dataclass

@@ -13,6 +13,9 @@ SIMPLE_SETTINGS = {
 POOL_OF_RAMOS = {
     'authentication': [
         constants.STATIC_AUTHORIZATION_BACKEND,
+    ],
+    'database': [
+        constants.SQLITE_DATABASE_BACKEND
     ]
 }
 
@@ -23,6 +26,7 @@ AUTH_APPLICATIONS = {
 
 # DEFAULT BACKENDS
 DEFAULT_AUTHORIZATION_BACKEND = 'static'
+DEFAULT_DATABASE_BACKEND = 'sqlite'
 
 LOGGING = {
     'version': 1,

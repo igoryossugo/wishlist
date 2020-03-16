@@ -1,16 +1,21 @@
 import sqlite3
 
+from ramos.mixins import ThreadSafeCreateMixin
+
+from genie.backends.database.backend import DatabaseBackend
+
 _con = sqlite3.connect(":memory:")
 
 
-class Connection:
-
+class SqliteDatabaseBackend(DatabaseBackend, ThreadSafeCreateMixin):
+    id = 'sqlite'
+    name = 'Sqlite Database'
     _connection = _con
 
     def __init__(self, table_name: str):
         self._table_name = table_name
 
-    def get(self, **kwargs):
+    def _get(self, **kwargs):
         if not kwargs:
             raise ValueError
 
@@ -24,7 +29,7 @@ class Connection:
 
         return result
 
-    def save(self, **kwargs):
+    def _save(self, **kwargs):
         if not kwargs:
             raise ValueError
 
@@ -47,7 +52,7 @@ class Connection:
 
         self._execute(query=query, parameters=tuple(kwargs.values()))
 
-    def delete(self, **kwargs):
+    def _delete(self, **kwargs):
         if not kwargs:
             raise ValueError
 
@@ -56,7 +61,7 @@ class Connection:
 
         self._execute(query=query, parameters=(kwargs[key]))
 
-    def update(self, id, **kwargs):
+    def _update(self, id, **kwargs):
         if not kwargs:
             raise ValueError
 

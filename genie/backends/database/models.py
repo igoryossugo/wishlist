@@ -1,10 +1,13 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 
-from genie.models.connection import Connection
+from simple_settings import settings
+
+from genie.backends.pools import DatabaseBackendPool
 
 
 @dataclass
 class BaseModel:
+    pk: int = field(default=False, init=False)
 
     @property
     def table_name(self):
@@ -12,7 +15,10 @@ class BaseModel:
 
     @classmethod
     def connection(cls):
-        return Connection(table_name=cls.table_name)
+        return DatabaseBackendPool.get(
+            backend_id=settings.DEFAULT_DATABASE_BACKEND,
+            table_name=cls.table_name
+        )
 
     @classmethod
     def get(cls, **kwargs):
@@ -24,6 +30,9 @@ class BaseModel:
 
     def save(self):
         return self.connection().save(**self.to_dict())
+
+    def update(self, **kwargs):
+        return self.connection().update(id=self.pk, **kwargs)
 
     def to_dict(self):
         return asdict(self)

@@ -16,14 +16,13 @@ class Connection:
 
         key = list(kwargs.keys())[0]
 
-        query = f'SELECT * FROM {self._table_name} WHERE ? = ?'
+        query = f'SELECT * FROM {self._table_name} WHERE {key} = ?'
 
-        result = self._execute(query=query, parameters=(key, kwargs[key]))
+        result = self._execute(query=query, parameters=(kwargs[key]))
         if result is None:
             raise Exception
 
-        obj, = result
-        return obj
+        return result
 
     def save(self, **kwargs):
         if not kwargs:
@@ -53,13 +52,36 @@ class Connection:
             raise ValueError
 
         key = list(kwargs.keys())[0]
-        query = f'DELETE FROM {self._table_name} WHERE ? = ?'
+        query = f'DELETE FROM {self._table_name} WHERE {key} = ?'
 
-        self._execute(query=query, parameters=(key, kwargs[key]))
+        self._execute(query=query, parameters=(kwargs[key]))
+
+    def update(self, id, **kwargs):
+        if not kwargs:
+            raise ValueError
+
+        query_set = None
+        parameters = []
+
+        for key in kwargs:
+            parameters.append(kwargs[key])
+            if not query_set:
+                query_set = f'{key}=?'
+                continue
+
+            query_set = f'{query_set}, {key}=?'
+
+        parameters.append(id)
+        query = f"""
+            UPDATE {self._table_name}
+            SET {query_set}
+            WHERE id=?
+        """
+        self._execute(query=query, parameters=tuple(parameters))
 
     def _execute(self, query, parameters=None):
-        with self._connection.cursor() as cursor:
-            self._connection.execute(query, parameters)
-            result = cursor.fetchone()
+        cursor = self._connection.cursor()
+        cursor.execute(query, parameters)
+        result = cursor.fetchall()
 
         return result

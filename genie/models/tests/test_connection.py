@@ -21,8 +21,8 @@ class TestConnection:
             connection.get(name='test')
 
         execute.assert_called_with(
-            query='SELECT * FROM TestConnection WHERE ? = ?',
-            parameters=('name', 'test')
+            query='SELECT * FROM TestConnection WHERE name = ?',
+            parameters=('test')
         )
 
     def test_insert_should_call_execute(self, connection, mock_execute):
@@ -43,6 +43,20 @@ class TestConnection:
             connection.delete(email='test@test.com')
 
         execute.assert_called_with(
-            query='DELETE FROM TestConnection WHERE ? = ?',
-            parameters=('email', 'test@test.com')
+            query='DELETE FROM TestConnection WHERE email = ?',
+            parameters=('test@test.com')
+        )
+
+    def test_update_should_call_execute(self, connection, mock_execute):
+        with mock_execute as execute:
+            connection.update(id=123, name='test', email='test@test.com')
+
+        expected_query = """
+            UPDATE TestConnection
+            SET name=?, email=?
+            WHERE id=?
+        """
+        execute.assert_called_with(
+            query=expected_query,
+            parameters=('test', 'test@test.com', 123)
         )

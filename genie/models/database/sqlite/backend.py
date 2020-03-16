@@ -12,9 +12,6 @@ class SqliteDatabaseBackend(DatabaseBackend, ThreadSafeCreateMixin):
     name = 'Sqlite Database'
     _connection = _con
 
-    def __init__(self, table_name: str):
-        self._table_name = table_name
-
     def _get(self, **kwargs):
         if not kwargs:
             raise ValueError

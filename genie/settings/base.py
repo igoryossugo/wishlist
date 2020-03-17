@@ -33,6 +33,13 @@ DEFAULT_AUTHORIZATION_BACKEND = 'static'
 DEFAULT_CATALOG_BACKEND = 'fake_success'
 DEFAULT_DATABASE_BACKEND = 'sqlite'
 
+
+# EXTENSIONS SETTINGS
+# LUIZALABS SETTINGS
+LUIZALABS_SETTINGS = {
+    'base_url': 'http://challenge-api.luizalabs.com'
+}
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,

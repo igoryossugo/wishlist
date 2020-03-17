@@ -13,5 +13,5 @@ class LuizalabsCatalogBackend(CatalogBackend, ThreadSafeCreateMixin):
     def _get_item(self, sku: str) -> Item:
         pass
 
-    def _list(self, sku: str) -> List[Item]:
+    def _list_items(self, sku: str) -> List[Item]:
         pass

@@ -1,7 +1,6 @@
 class BackendException(Exception):
     status = 500
     error_message = 'Internal Server Error'
-    error_detail = {}
 
     def __init__(
         self,
@@ -13,7 +12,7 @@ class BackendException(Exception):
         self.status = status or self.status
         self.error_message = error_message or self.error_message
         self.error_code = error_code or self._get_error_code(self.status)
-        self.error_detail = self.error_detail or error_detail
+        self.error_detail = error_detail or {}
 
     def _get_error_code(self, status):
         error_code_map = {

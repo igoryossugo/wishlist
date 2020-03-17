@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from decimal import Decimal
+from typing import Optional
 
 
 @dataclass
@@ -9,4 +10,4 @@ class Item:
     price: Decimal
     image_url: str
     brand: str
-    review_score: float
+    review_score: Optional[float] = None

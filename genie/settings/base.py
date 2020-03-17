@@ -14,9 +14,13 @@ POOL_OF_RAMOS = {
     'authentication': [
         constants.STATIC_AUTHORIZATION_BACKEND,
     ],
+    'catalog': [
+        constants.FAKE_SUCCESS_CATALOG_BACKEND,
+        constants.FAKE_ERROR_CATALOG_BACKEND,
+    ],
     'database': [
-        constants.SQLITE_DATABASE_BACKEND
-    ]
+        constants.SQLITE_DATABASE_BACKEND,
+    ],
 }
 
 # Auth applications
@@ -26,6 +30,7 @@ AUTH_APPLICATIONS = {
 
 # DEFAULT BACKENDS
 DEFAULT_AUTHORIZATION_BACKEND = 'static'
+DEFAULT_CATALOG_BACKEND = 'fake_success'
 DEFAULT_DATABASE_BACKEND = 'sqlite'
 
 LOGGING = {

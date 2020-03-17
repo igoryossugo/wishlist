@@ -17,3 +17,11 @@ STATIC_AUTHORIZATION_BACKEND = (
 SQLITE_DATABASE_BACKEND = (
     'genie.models.database.sqlite.backend.SqliteDatabaseBackend'
 )
+
+FAKE_SUCCESS_CATALOG_BACKEND = (
+    'genie.extensions.fake.backends.catalog.FakeSuccessCatalogBackend'
+)
+
+FAKE_ERROR_CATALOG_BACKEND = (
+    'genie.extensions.fake.backends.catalog.FakeErrorCatalogBackend'
+)

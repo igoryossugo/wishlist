@@ -1,8 +1,11 @@
+import os
 import sys
 
 from genie.settings import constants
 
 DEBUG = False
+
+BASE_PATH = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..')
 
 # SIMPLE SETTINGS STUFF
 SIMPLE_SETTINGS = {
@@ -37,7 +40,9 @@ DEFAULT_DATABASE_BACKEND = 'sqlite'
 # EXTENSIONS SETTINGS
 # LUIZALABS SETTINGS
 LUIZALABS_SETTINGS = {
-    'base_url': 'http://challenge-api.luizalabs.com'
+    'base_url': 'http://challenge-api.luizalabs.com',
+    'timeout': 2,
+
 }
 
 LOGGING = {
@@ -45,10 +50,10 @@ LOGGING = {
     'disable_existing_loggers': True,
     'formatters': {
         'verbose': {
-            'format': '%(levelname)s %(asctime)s %(hostname)s %(name)s %(module)s:%(filename)s:%(lineno)d %(process)d %(thread)d == %(message)s'  # noqa
+            'format': '%(levelname)s %(asctime)s %(name)s %(module)s:%(filename)s:%(lineno)d %(process)d %(thread)d == %(message)s'  # noqa
         },
         'simple': {
-            'format': '%(hostname)s %(levelname)s %(name)s %(message)s'
+            'format': '%(levelname)s %(name)s %(message)s'
         },
     },
     'handlers': {

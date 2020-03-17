@@ -8,3 +8,4 @@ pytest-cov==2.7.1
 pytest-env==0.6.2
 pytest==5.1.2
 coveralls==1.11.1
+vcrpy==4.0.2

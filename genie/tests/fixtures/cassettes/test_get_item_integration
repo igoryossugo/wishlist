@@ -1,0 +1,37 @@
+{
+    "version": 1,
+    "interactions": [
+        {
+            "request": {
+                "method": "GET",
+                "uri": "http://challenge-api.luizalabs.com/api/product/82727b28-d6b3-813c-5139-50d3b28c16d4",
+                "body": null,
+                "headers": {
+                    "Content-Type": [
+                        "application/json"
+                    ]
+                }
+            },
+            "response": {
+                "status": {
+                    "code": 200,
+                    "message": "OK"
+                },
+                "headers": {
+                    "Server": "openresty/1.9.7.2",
+                    "Date": "Tue, 17 Mar 2020 14:56:11 GMT",
+                    "Content-Type": "application/json",
+                    "Content-Length": "229",
+                    "Last-Modified": "Fri, 12 Feb 2016 13:24:35 GMT",
+                    "Connection": "keep-alive",
+                    "ETag": "\"56bddd13-e5\"",
+                    "Accept-Ranges": "bytes"
+                },
+                "body": {
+                    "string": "{\"price\": 34.9, \"image\": \"http://challenge-api.luizalabs.com/images/82727b28-d6b3-813c-5139-50d3b28c16d4.jpg\", \"brand\": \"epoch magia\", \"id\": \"82727b28-d6b3-813c-5139-50d3b28c16d4\", \"title\": \"Sylvanian Families Conjunto de Piano\"}"
+                },
+                "url": "http://challenge-api.luizalabs.com/api/product/82727b28-d6b3-813c-5139-50d3b28c16d4"
+            }
+        }
+    ]
+}

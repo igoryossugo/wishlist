@@ -2,8 +2,8 @@ import logging
 
 from simple_settings import settings
 
-from genie.backends.exceptions import BackendException
 from genie.backends.catalog.exceptions import ItemNotFound
+from genie.backends.exceptions import BackendException
 from genie.contrib.http_client import BaseHttpClient
 
 logger = logging.getLogger('__name__')

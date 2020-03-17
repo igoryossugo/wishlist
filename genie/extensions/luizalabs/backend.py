@@ -16,5 +16,5 @@ class LuizalabsCatalogBackend(CatalogBackend, ThreadSafeCreateMixin):
         response = await LuizalabsGetItemHTTPClient().get_item(sku=sku)
         return build_item_response(response)
 
-    async def _list_items(self, sku: str) -> List[Item]:
+    async def _list_items(self, page: int) -> List[Item]:
         pass

@@ -7,7 +7,7 @@ import aiohttp
 
 class BaseHttpClient:
     base_url = ''
-    default_timeout = None
+    default_timeout = 0
     encoder = staticmethod(json.dumps)
 
     async def fetch(
@@ -127,17 +127,17 @@ class BaseHttpClient:
             **kwargs,
         )
 
-    def encode_body(self, data: Dict) -> str:
+    def encode_body(self, data: Dict = None):
         if data is None:
-            return
+            return None
 
         return self.encoder(data)
 
     def get_default_headers(self) -> Dict:
         return {}
 
-    def _build_timeout(self, timeout: int = None) -> int:
-        return self.default_timeout if None else timeout
+    def _build_timeout(self, timeout=None) -> int:
+        return self.default_timeout if timeout is None else timeout
 
     def _build_url(self, route_url: str, query_strings: Dict = None):
         url = f'{self.base_url}/{route_url}'

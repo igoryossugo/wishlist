@@ -31,8 +31,8 @@ class BaseModel:
     def save(self):
         return self.connection().save(**self.to_dict())
 
-    def update(self, **kwargs):
-        return self.connection().update(id=self.pk, **kwargs)
+    def update(self):
+        return self.connection().update(id=self.pk, **self.to_dict())
 
     def to_dict(self):
         return asdict(self)

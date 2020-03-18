@@ -1,4 +1,5 @@
 aiohttp==3.6.2
 gunicorn==20.0.4
+marshmallow-3.5.1
 ramos==1.4.0
 simple-settings==0.18.0

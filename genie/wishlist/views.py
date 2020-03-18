@@ -35,22 +35,16 @@ class CreateWishlistView(web.View):
                 status=400
             )
 
-        customer = Customer.get(customer_id=schema.customer_id)
-        if customer.wishlist_id:
-            return JSONResponse(status=202)
+        wishlist = Wishlist.create(customer_id=schema.customer_id)
 
-        wishlist = Wishlist().save()
-        customer.wishlist_id = wishlist.id
-        customer.save()
-
-        return JSONResponse(status=201)
+        return JSONResponse(status=201, data=wishlist.to_dict())
 
 
 class GetWishlistView(web.View):
 
     async def get(self):
         wishlist_id = _get_wishlist_id(self.request)
-        wishlist = Wishlist.get(id=wishlist_id)
+        wishlist = Wishlist(wishlist_id=wishlist_id).get()
         return JSONResponse(status=200, data=wishlist.to_dict())
 
 

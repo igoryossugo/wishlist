@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `geniep.`.`WishlistItem` (
   `sku` VARCHAR(45) NULL, 
   `title` VARCHAR(45) NULL,
   `image_url` VARCHAR(45) NULL,
-  `catalog_price` VARCHAR(45) NULL,
+  `price` VARCHAR(45) NULL,
   `brand` VARCHAR(45) NULL,
   `review_score` VARCHAR(45) NULL,
   `wishlist` INT NULL,

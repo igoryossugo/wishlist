@@ -20,7 +20,7 @@ def build_urls(prefix=''):
         ),
         web.view(
             f'{prefix}/'
-            r'{customer_id:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}/',  # noqa
+            r'{customer_id:[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}}/'  # noqa
             'delete/',
             views.DeleteCustomerView
         ),

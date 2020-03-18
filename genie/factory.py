@@ -1,4 +1,6 @@
+from aiocache import caches
 from aiohttp import web
+from simple_settings import settings
 
 from genie.customer.urls import build_urls as customer_urls
 from genie.wishlist.urls import build_urls as wishlist_urls
@@ -23,8 +25,11 @@ def setup_routes(app):
 
 
 async def start_plugins(app):
-    pass
+    caches.set_config(settings.CACHE)
+    app.cache = caches.get('default')
 
 
 async def stop_plugins(app):
-    pass
+    cache_config = caches.get_config()
+    for cache_name in cache_config:
+        await caches.get(cache_name).close()

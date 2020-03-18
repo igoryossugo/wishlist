@@ -1,5 +1,6 @@
-from typing import Optional
 from dataclasses import dataclass
+from decimal import Decimal
+from typing import Optional
 
 from genie.backends.database.models import BaseModel
 
@@ -11,7 +12,7 @@ class ItemModel(BaseModel):
     sku: str
     title: str
     image_url: str
-    catalog_price: str
+    price: Decimal
     brand: str
     review_score: Optional[float] = None
 

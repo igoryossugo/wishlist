@@ -76,3 +76,27 @@ LOGGING = {
         }
     }
 }
+
+# REDIS
+REDIS_DB = 1
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_POOLSIZE = 4
+MATCHER_CACHE_TTL = 60 * 30
+
+CACHE = {
+    'default': {
+        'cache': 'aiocache.RedisCache',
+        'endpoint': REDIS_HOST,
+        'port': int(REDIS_PORT),
+        'db': REDIS_DB,
+        'pool_max_size': REDIS_POOLSIZE,
+        'timeout': 1,
+        'serializer': {
+            'class': 'aiocache.serializers.JsonSerializer'
+        },
+    }
+}
+
+
+WISHLIST_CACHE_MAX_AGE = 10 * constants.MINUTES

@@ -6,7 +6,7 @@ from genie.backends.database.models import BaseModel
 
 
 @dataclass
-class Customer(BaseModel):
+class CustomerModel(BaseModel):
     id: str
     name: str
     email: str

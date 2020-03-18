@@ -1,50 +1,18 @@
-class InMemoryCache:
+from typing import Dict, Optional
 
-    def __init__(self):
-        self._db = {}
-
-    async def get(self, key):
-        return self._db.get(key)
-
-    async def set(self, key, value, ttl=None):
-        self._db[key] = value
-
-    async def clear(self):
-        self._db = {}
-
-    async def delete(self, key):
-        if key in self._data:
-            del self._data[key]
-
-    async def increment(self, key, delta=1):
-        value = await self.get(key)
-
-        if not value:
-            await self.set(key, delta)
-            return delta
-
-        new_value = value + delta
-        await self.set(key, new_value)
-        return new_value
-
-    def __repr__(self):
-        return '<InMemoryCache: {} keys>'.format(len(self._db))
+from aiocache import caches
+from aiocache.base import BaseCache
 
 
-class RedisCache:
+class Cache:
+    def __init__(self, cache: BaseCache = None):
+        self._cache = cache or caches.get('default')
 
-    def __init__(self, redis):
-        self.redis = redis
+    async def get(self, key: str) -> Optional[Dict]:
+        return await self._cache.get(self._cache_key(key))
 
-    async def increment(self, key, delta=1):
-        try:
-            return await self.redis.increment(key)
-        except KeyError:
-            await self.redis.set(key, delta)
-            return delta
+    async def set(self, key: str, data: Dict, ttl: int):
+        return await self._cache.set(self._cache_key(key), data, ttl)
 
-    async def delete(self, key):
-        return await self.redis.delete([key])
-
-    def __getattr__(self, name):
-        return getattr(self.redis, name)
+    def _cache_key(self, key: str) -> str:
+        return f'base-cache-{key}'

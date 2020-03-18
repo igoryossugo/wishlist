@@ -4,8 +4,7 @@ from aiohttp import web
 from marshmallow import ValidationError
 
 from genie.contrib.response import JSONResponse
-from genie.customer.models import Customer
-from genie.wishlist.models import Wishlist
+from genie.wishlist.models.wishlist import Wishlist
 from genie.wishlist.schemas import WishlistSchema
 
 logger = logging.getLogger(__name__)

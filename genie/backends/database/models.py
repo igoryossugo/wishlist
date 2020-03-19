@@ -7,11 +7,8 @@ from genie.backends.pools import DatabaseBackendPool
 
 @dataclass
 class BaseModel:
-    pk: int = field(default=False, init=False)
 
-    @property
-    def table_name(self):
-        return self.__class__.__name__
+    pk: int = field(default=False, init=False)
 
     @classmethod
     def connection(cls):
@@ -28,11 +25,15 @@ class BaseModel:
     def delete(cls, **kwargs):
         return cls.connection().delete(**kwargs)
 
-    def save(self):
-        return self.connection().save(**self.to_dict())
+    def save(self, **kwargs):
+        kwargs = kwargs or {}
+        kwargs.update(self.to_dict())
+        return self.connection().save(**kwargs)
 
-    def update(self, **kwargs):
-        return self.connection().update(id=self.pk, **kwargs)
+    def update(self):
+        return self.connection().update(id=self.pk, **self.to_dict())
 
     def to_dict(self):
-        return asdict(self)
+        response = asdict(self)
+        del(response['pk'])
+        return response

@@ -6,7 +6,7 @@ SANDBOX_SETTINGS ?= genie.settings.sandbox
 
 
 run:
-	@gunicorn genie:app --bind localhost:${PORT} --workers ${WORKER_PROCESSES} --worker-class aiohttp.worker.GunicornUVLoopWebWorker
+	@gunicorn genie:app --bind localhost:${PORT} --workers ${WORKER_PROCESSES} --worker-class aiohttp.worker.GunicornUVLoopWebWorker -t 0 -e SIMPLE_SETTINGS=${SIMPLE_SETTINGS}
 
 requirements-test:
 	@pip install -r requirements/test.txt
@@ -18,7 +18,7 @@ requirements-prod:
 	@pip install -r requirements/prod.txt
 
 test:
-	@pytest genie -s -v
+	@pytest genie -s -v -p no:warnings
 
 test-coverage:
 	@SIMPLE_SETTINGS=${TEST_SETTINGS} pytest --cov=genie genie --cov-report term-missing

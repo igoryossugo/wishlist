@@ -1,15 +1,20 @@
-import sqlite3
-
+from simple_settings import settings
+from MySQLdb import _mysql
 from ramos.mixins import ThreadSafeCreateMixin
 
 from genie.backends.database.backend import DatabaseBackend
 
-_con = sqlite3.connect(":memory:")
+_con = _mysql.connect(
+    host=settings.DATABASE['HOST'],
+    db=settings.DATABASE['NAME'],
+    user=settings.DATABASE['USER'],
+    passwd=settings.DATABASE['PASSWORD'],
+)
 
 
-class SqliteDatabaseBackend(DatabaseBackend, ThreadSafeCreateMixin):
-    id = 'sqlite'
-    name = 'Sqlite Database'
+class MysqlDatabaseBackend(DatabaseBackend, ThreadSafeCreateMixin):
+    id = 'mysql'
+    name = 'Mysql Database'
     _connection = _con
 
     def _get(self, **kwargs):
@@ -82,8 +87,8 @@ class SqliteDatabaseBackend(DatabaseBackend, ThreadSafeCreateMixin):
         self._execute(query=query, parameters=tuple(parameters))
 
     def _execute(self, query, parameters=None):
-        cursor = self._connection.cursor()
-        cursor.execute(query, parameters)
-        result = cursor.fetchall()
+        with self._connection.cursor() as cursor:
+            self._connection.execute(query, parameters)
+            result = cursor.fetchone()
 
         return result

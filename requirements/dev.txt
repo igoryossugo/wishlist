@@ -1,3 +1,4 @@
 -r test.txt
 bump2version==0.5.11
 towncrier==19.2.0
+aiohttp-swagger==1.0.14

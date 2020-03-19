@@ -2,14 +2,14 @@ from unittest import mock
 
 import pytest
 
-from genie.models.database.sqlite.backend import SqliteDatabaseBackend
+from genie.models.database.mysql.backend import MysqlDatabaseBackend
 
 
 class TestSqliteDatabaseBackend:
 
     @pytest.fixture
     def connection(self):
-        return SqliteDatabaseBackend(table_name='TestConnection')
+        return MysqlDatabaseBackend(table_name='TestConnection')
 
     @pytest.fixture
     def mock_execute(self, connection):

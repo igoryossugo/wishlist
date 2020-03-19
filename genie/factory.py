@@ -2,7 +2,6 @@ from aiocache import caches
 from aiohttp import web
 from simple_settings import settings
 
-from genie.models.migration import mirgate
 from genie.customer.urls import build_urls as customer_urls
 from genie.wishlist.urls import build_urls as wishlist_urls
 
@@ -13,7 +12,6 @@ def build_app():
     app.on_startup.append(start_plugins)
     app.on_cleanup.append(stop_plugins)
     setup_routes(app)
-    mirgate()
     return app
 
 

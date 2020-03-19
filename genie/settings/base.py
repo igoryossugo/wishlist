@@ -31,10 +31,23 @@ AUTH_APPLICATIONS = {
     'dev': 'jovem'
 }
 
+DATABASE = {
+    'NAME': os.environ.get('MYSQL_DATABASE_NAME', 'genie'),
+    'USER': os.environ.get('MYSQL_USER', 'root'),
+    'PASSWORD': os.environ.get('MYSQL_PASSWORD', ''),
+    'HOST': os.environ.get('MYSQL_HOST', '127.0.0.1'),
+    'PORT': os.environ.get('MYSQL_PORT', '3306'),
+    'CONN_MAX_AGE': int(os.environ.get(
+        'MYSQL_CONN_MAX_AGE',
+        4 * constants.HOURS
+    )),
+}
+
+
 # DEFAULT BACKENDS
 DEFAULT_AUTHORIZATION_BACKEND = 'static'
 DEFAULT_CATALOG_BACKEND = 'fake_success'
-DEFAULT_DATABASE_BACKEND = 'sqlite'
+DEFAULT_DATABASE_BACKEND = 'mysql'
 
 
 # EXTENSIONS SETTINGS

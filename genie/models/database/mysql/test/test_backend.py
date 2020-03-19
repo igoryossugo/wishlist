@@ -5,7 +5,7 @@ import pytest
 from genie.models.database.mysql.backend import MysqlDatabaseBackend
 
 
-class TestSqliteDatabaseBackend:
+class TestMysqlDatabaseBackend:
 
     @pytest.fixture
     def connection(self):

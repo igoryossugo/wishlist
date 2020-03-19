@@ -4,7 +4,7 @@ from aiohttp import web
 from marshmallow import ValidationError
 
 from genie.contrib.response import JSONResponse
-from genie.customer.models import CustomerModel
+from genie.customer.models import Customer, CustomerModel
 from genie.customer.schemas import CustomerSchema
 
 logger = logging.getLogger(__name__)
@@ -33,13 +33,14 @@ class GetOrUpdateCustomerView(web.View):
                 status=400
             )
 
-        customer = schema.make_model()
-        customer.update()
-        return JSONResponse(status=200)
+        customer_model = schema.make_model()
+        customer = Customer(id=customer_model.id)
+        customer.update(customer)
+        return JSONResponse(status=200, data=customer.to_dict())
 
     async def get(self):
         customer_id = _get_customer_id(self.request)
-        customer = CustomerModel.get(customer_id=customer_id)
+        customer = CustomerModel(id=customer_id).get()
         return JSONResponse(status=200, data=customer.to_dict())
 
 
@@ -47,7 +48,7 @@ class DeleteCustomerView(web.View):
 
     async def delete(self):
         customer_id = _get_customer_id(self.request)
-        CustomerModel.delete(customer_id=customer_id)
+        Customer(id=customer_id).delete()
         return JSONResponse(status=200)
 
 
@@ -68,6 +69,7 @@ class CreateCustomerView(web.View):
             )
 
         customer = schema.make_model()
+        customer = Customer.create(customer.to_dict())
         customer.save()
         return JSONResponse(status=201)
 
@@ -75,7 +77,7 @@ class CreateCustomerView(web.View):
 class ListCustomerView(web.View):
 
     async def get(self):
-        customers = CustomerModel.get()
+        customers = CustomerModel.list()
         return JSONResponse(
             data=[customer.to_dict() for customer in customers],
             status=200

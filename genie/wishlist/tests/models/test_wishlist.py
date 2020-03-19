@@ -5,8 +5,10 @@ from asynctest import mock
 from simple_settings import settings
 
 from genie.contrib.caches import Cache
-from genie.customer.models import CustomerModel
-from genie.wishlist.exceptions import WishlistAlreadyExistsForCustomer
+from genie.wishlist.exceptions import (
+    CustomerNotSet,
+    WishlistAlreadyExistsForCustomer
+)
 from genie.wishlist.models.item import ItemModel
 from genie.wishlist.models.wishlist import Wishlist, WishlistModel
 
@@ -53,8 +55,16 @@ class TestWishlistModel:
         wishlist.remove_item(sku=item_model_a.sku)
         assert wishlist.items == [item_model_b]
 
-    def test_save_calls_item_save_and_base_save(self, item_model):
-        wishlist = WishlistModel(id='a', items=[item_model])
+    def test_save_calls_item_save_and_base_save(
+        self,
+        item_model,
+        customer_model
+    ):
+        wishlist = WishlistModel(
+            id='a',
+            items=[item_model],
+            customer=customer_model
+        )
         with mock.patch(
             'genie.wishlist.models.wishlist.BaseModel.save'
         ) as mocked_save:
@@ -64,16 +74,15 @@ class TestWishlistModel:
         assert mocked_save.called
         assert mocked_item_save.called
 
+    def test_save_without_customer_raises_customer_error(self, item_model):
+        wishlist = WishlistModel(
+            id='a', items=[item_model]
+        )
+        with pytest.raises(CustomerNotSet):
+            wishlist.save()
+
 
 class TestWishlist:
-
-    @pytest.fixture
-    def model_customer(self):
-        return CustomerModel(
-            id='a',
-            name='igor',
-            email='test@test.com',
-        )
 
     @pytest.fixture
     def mocked_customer_model(self):
@@ -90,10 +99,10 @@ class TestWishlist:
     def test_create_calls_customer_models_get(
         self,
         mocked_customer_model,
-        model_customer
+        customer_model
     ):
         with mocked_customer_model as mocked_customer:
-            mocked_customer.return_value = model_customer
+            mocked_customer.return_value = customer_model
             Wishlist.create(customer_id='a')
 
         mocked_customer.assert_called_with(customer_id='a')
@@ -101,10 +110,10 @@ class TestWishlist:
     def test_create_returns_instance_with_default_attributes(
         self,
         mocked_customer_model,
-        model_customer
+        customer_model
     ):
         with mocked_customer_model as mocked_customer:
-            mocked_customer.return_value = model_customer
+            mocked_customer.return_value = customer_model
             wishlist = Wishlist.create(customer_id='a')
 
         assert isinstance(wishlist, Wishlist)
@@ -114,16 +123,16 @@ class TestWishlist:
     def test_create_raises_exception_when_customer_has_wishlist_id(
         self,
         mocked_customer_model,
-        model_customer
+        customer_model
     ):
         with mocked_customer_model as mocked_customer:
-            model_customer.wishlist_id = 'a'
-            mocked_customer.return_value = model_customer
+            customer_model.wishlist_id = 'a'
+            mocked_customer.return_value = customer_model
             with pytest.raises(WishlistAlreadyExistsForCustomer):
                     Wishlist.create(customer_id='a')
 
     async def test_save_calls_cache_and_model(self):
-        wishlist = Wishlist(wishlist_id='a')
+        wishlist = Wishlist(id='a')
         with mock.patch.object(Cache, 'set') as mocked_cache:
             with mock.patch.object(wishlist, 'model') as mocked_model:
                 await wishlist.save()

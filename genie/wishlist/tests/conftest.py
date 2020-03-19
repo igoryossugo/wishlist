@@ -3,6 +3,7 @@ from decimal import Decimal
 import pytest
 
 from genie.backends.catalog.models import Item
+from genie.customer.models import CustomerModel
 from genie.wishlist.models.item import ItemModel
 
 
@@ -33,4 +34,13 @@ def item():
         price=Decimal('34.9'),
         brand='epoch magia',
         review_score=4.3
+    )
+
+
+@pytest.fixture
+def customer_model():
+    return CustomerModel(
+        id='abc',
+        name='Bruneira da Silva',
+        email='teste@magazineluiza.com.br',
     )

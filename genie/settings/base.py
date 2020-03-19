@@ -42,7 +42,6 @@ DEFAULT_DATABASE_BACKEND = 'sqlite'
 LUIZALABS_SETTINGS = {
     'base_url': 'http://challenge-api.luizalabs.com',
     'timeout': 2,
-
 }
 
 LOGGING = {
@@ -65,9 +64,9 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
+        'genie': {
             'handlers': ['stdout'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': True,
         },
         'gunicorn.access': {

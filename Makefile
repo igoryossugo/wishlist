@@ -6,7 +6,7 @@ SANDBOX_SETTINGS ?= genie.settings.sandbox
 
 
 run:
-	@gunicorn genie:app --bind localhost:${PORT} --workers ${WORKER_PROCESSES} --worker-class aiohttp.worker.GunicornUVLoopWebWorker -e SIMPLE_SETTINGS=${SIMPLE_SETTINGS}
+	@gunicorn genie:app --bind localhost:${PORT} --workers ${WORKER_PROCESSES} --worker-class aiohttp.worker.GunicornUVLoopWebWorker -t 0 -e SIMPLE_SETTINGS=${SIMPLE_SETTINGS}
 
 requirements-test:
 	@pip install -r requirements/test.txt

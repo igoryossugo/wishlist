@@ -8,7 +8,10 @@ from genie.backends.database.models import BaseModel
 from genie.backends.pools.catalog import CatalogBackendPool
 from genie.contrib.caches import Cache
 from genie.customer.models import CustomerModel
-from genie.wishlist.exceptions import WishlistAlreadyExistsForCustomer
+from genie.wishlist.exceptions import (
+    CustomerNotSet,
+    WishlistAlreadyExistsForCustomer
+)
 from genie.wishlist.models.item import ItemModel
 
 
@@ -18,11 +21,13 @@ class WishlistModel(BaseModel):
 
     id: str
     items: Optional[List[ItemModel]] = None
+    customer: Optional[CustomerModel] = None
 
     @classmethod
     def get(cls, id: str):
-        items = ItemModel.get(wishlist_id=id)
-        return cls(id=id, items=items)
+        wishlist = super().get(id=id)
+        wishlist['items'] = ItemModel.get(wishlist_id=id)
+        return cls.from_dict(wishlist)
 
     def add_item(self, item: ItemModel):
         self.items = self.items or []
@@ -34,6 +39,10 @@ class WishlistModel(BaseModel):
         self.items = new_items
 
     def save(self):
+        if not self.customer:
+            raise CustomerNotSet
+        self.customer.save()
+
         self.items = self.items or []
         for item in self.items:
             item.save(wishlist_id=self.id)
@@ -47,8 +56,8 @@ class WishlistModel(BaseModel):
 
 class Wishlist:
 
-    def __init__(self, wishlist_id: str):
-        self.model = WishlistModel(id=wishlist_id)
+    def __init__(self, id: str, customer: CustomerModel = None):
+        self.model = WishlistModel(id=id, customer=customer)
         self._cache = Cache()
 
     @classmethod
@@ -59,7 +68,7 @@ class Wishlist:
                 'wishlist_id': customer.wishlist_id
             })
 
-        return cls(wishlist_id=uuid4())
+        return cls(id=uuid4(), customer=customer)
 
     async def get(self) -> WishlistModel:
         wishlist = await self._cache.get(self.model.id)

@@ -53,12 +53,3 @@ class TestBaseModel:
             model.save()
 
         connection.assert_called_with(**model.to_dict())
-
-    # def test_update_calls_connection(self, model):
-    #     with mock.patch(
-    #         'genie.backends.database.backend.DatabaseBackend.update'
-    #     ) as connection:
-    #         model.pk = 33
-    #         model.update(name='jovem')
-
-    #     connection.assert_called_with(id=33, name='jovem')

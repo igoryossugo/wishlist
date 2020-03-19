@@ -15,7 +15,7 @@ STATIC_AUTHORIZATION_BACKEND = (
 )
 
 SQLITE_DATABASE_BACKEND = (
-    'genie.models.database.mysql.backend.SqliteDatabaseBackend'
+    'genie.models.database.mysql.backend.MysqlDatabaseBackend'
 )
 
 FAKE_SUCCESS_CATALOG_BACKEND = (

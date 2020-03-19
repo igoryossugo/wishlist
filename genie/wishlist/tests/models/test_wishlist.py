@@ -18,7 +18,9 @@ class TestWishlistModel:
     def test_get_calls_item_model(self):
         with mock.patch(
             'genie.wishlist.models.wishlist.ItemModel.get'
-        ) as mocked_item:
+        ) as mocked_item, mock.patch(
+            'genie.wishlist.models.wishlist.BaseModel.get'
+        ):
             WishlistModel.get(id='a')
 
         mocked_item.assert_called_with(wishlist_id='a')

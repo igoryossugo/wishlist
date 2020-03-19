@@ -2,13 +2,16 @@ from aiocache import caches
 from aiohttp import web
 from simple_settings import settings
 
+from genie.contrib.auth.middlewares import authorization_middleware
 from genie.customer.urls import build_urls as customer_urls
 from genie.wishlist.urls import build_urls as wishlist_urls
 
 
 def build_app():
     pre_startup()
-    app = web.Application()
+    app = web.Application(middlewares=[
+        authorization_middleware
+    ])
     app.on_startup.append(start_plugins)
     app.on_cleanup.append(stop_plugins)
     setup_routes(app)

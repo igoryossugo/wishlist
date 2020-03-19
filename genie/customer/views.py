@@ -56,9 +56,8 @@ class CreateCustomerView(web.View):
 
     async def post(self):
         data = await self.request.json()
-        schema = CustomerSchema(strict=True)
         try:
-            schema = schema.load(data)
+            customer = CustomerSchema().load(data)
         except ValidationError as e:
             logger.debug(
                 f'Error validating customer create. Error {e.messages}'
@@ -68,8 +67,7 @@ class CreateCustomerView(web.View):
                 status=400
             )
 
-        customer = schema.make_model()
-        customer = Customer.create(customer.to_dict())
+        customer = Customer.create(name=customer.name, email=customer.email)
         customer.save()
         return JSONResponse(status=201)
 

@@ -34,4 +34,6 @@ class BaseModel:
         return self.connection().update(id=self.pk, **self.to_dict())
 
     def to_dict(self):
-        return asdict(self)
+        response = asdict(self)
+        del(response['pk'])
+        return response

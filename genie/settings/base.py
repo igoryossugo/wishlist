@@ -64,6 +64,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        '': {
+            'handlers': ['stdout'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
         'genie': {
             'handlers': ['stdout'],
             'level': 'DEBUG',

@@ -1,10 +1,14 @@
-import sqlite3
+import mysql
 
 from ramos.mixins import ThreadSafeCreateMixin
 
 from genie.backends.database.backend import DatabaseBackend
 
-_con = sqlite3.connect(":memory:")
+_con = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    passwd=''
+)
 
 
 class SqliteDatabaseBackend(DatabaseBackend, ThreadSafeCreateMixin):

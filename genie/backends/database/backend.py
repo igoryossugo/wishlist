@@ -3,7 +3,7 @@ import abc
 
 class DatabaseBackend(metaclass=abc.ABCMeta):
 
-    def __init__(self, table_name: str):
+    def __init__(self, table_name: str = None):
         self._table_name = table_name
 
     def get(self, **kwargs):

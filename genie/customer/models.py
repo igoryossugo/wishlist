@@ -9,14 +9,16 @@ from genie.customer.exceptions import CustomerAlreadyExists
 
 @dataclass
 class CustomerModel(BaseModel):
-    id: str
+    table_name = 'CustomerModel'
+
     name: str
     email: str
+    id: str = None
     wishlist_id: Optional[str] = None
 
     @classmethod
-    def get(cls, id):
-        customer = super().get(id=id)
+    def get(cls, **kwargs):
+        customer = super().get(**kwargs)
         return cls.from_dict(customer)
 
     def save(self, wishlist_id: str = None):

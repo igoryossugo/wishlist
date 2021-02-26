@@ -1,5 +1,5 @@
 aiocache[redis]==0.11.1
-aiohttp==3.6.2
+aiohttp==3.7.4
 gunicorn==20.0.4
 marshmallow==3.5.1
 mysqlclient==1.4.6
